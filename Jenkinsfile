@@ -13,6 +13,7 @@ pipeline {
             post{
                 always {
                          junit 'target/surefire-reports/junitreports/*.xml'
+                         emailext attachmentsPattern: 'target/surefire-reports/emailable-report.html', body: '$DEFAULT_CONTENT', subject: '$DEFAULT_SUBJECT', to: '$DEFAULT_RECIPIENTS'
                 }
         }
         }
