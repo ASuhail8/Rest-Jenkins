@@ -3,12 +3,12 @@ pipeline {
     stages{
         stage('Maven clean '){
             steps {
-                'sh mvn clean'
+                sh 'mvn clean'
             }
         }
         stage('Run the API tests'){
             steps {
-                'sh mvn test'
+                sh 'mvn test'
             }
             post{
                 always {
