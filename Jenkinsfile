@@ -22,7 +22,7 @@ pipeline {
             }
              post{
                 always {
-                         junit 'test-output/outputOnDocker/junitreports/junitreports/*.xml'
+                         junit 'test-output/outputOnDocker/junitreports/*.xml'
                          emailext attachmentsPattern: 'test-output/outputOnDocker/emailable-report.html', body: '$DEFAULT_CONTENT', subject: '$DEFAULT_SUBJECT', to: '$DEFAULT_RECIPIENTS'
                 }
         }
