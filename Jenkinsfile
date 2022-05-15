@@ -1,22 +1,33 @@
 pipeline {
     agent any
     stages{
-        stage('Maven clean '){
+        stage('Build jar files'){
             steps {
-                sh 'mvn clean'
+                sh 'mvn clean package -DskipTests'
             }
         }
-        stage('Run the API tests'){
-            steps {
-                sh 'mvn test'
+        stage('Build the docker image'){
+            steps{
+                sh 'docker build -t asuhail8/docker-rest .'
             }
-            post{
+        }
+        stage('Push the docker image to docker hub'){
+            steps{
+                sh 'docker push asuhail8/docker-rest'
+            }
+        }
+        stage('Run the automated tests on docker container'){
+            steps{
+                sh "docker run -v /Users/abdullasuhail/Desktop/Work/Java' 'Projects/Rest/test-output/outputOnDocker:/restapi/test-output"
+            }
+             post{
                 always {
-                         junit 'target/surefire-reports/junitreports/*.xml'
-                         emailext attachmentsPattern: 'target/surefire-reports/emailable-report.html', body: '$DEFAULT_CONTENT', subject: '$DEFAULT_SUBJECT', to: '$DEFAULT_RECIPIENTS'
+                         junit 'test-output/outputOnDocker/junitreports/junitreports/*.xml'
+                         emailext attachmentsPattern: 'test-output/outputOnDocker/emailable-report.html', body: '$DEFAULT_CONTENT', subject: '$DEFAULT_SUBJECT', to: '$DEFAULT_RECIPIENTS'
                 }
         }
         }
+       
         
     }
 }
