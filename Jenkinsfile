@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Run the automated tests on docker container'){
             steps{
-                sh "docker run -v /Users/abdullasuhail/Desktop/Work/Java' 'Projects/Rest/test-output/outputOnDocker:/restapi/test-output"
+                sh "docker run -v /Users/abdullasuhail/Desktop/Work/Java' 'Projects/Rest/test-output/outputOnDocker:/restapi/test-output asuhail8/docker-rest"
             }
              post{
                 always {
